@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.softclass.fingerprint.AttendanceController">
+
+    <top>
+        <Label text="Sistema de control de ingresos"
+               style="-fx-font-size: 20px; -fx-padding: 10; -fx-font-weight: bold;"/>
+    </top>
+
+    <center>
+        <VBox spacing="15" alignment="CENTER">
+
+            <TitledPane text="Usuarios" expanded="true" collapsible="false">
+                <VBox spacing="10" alignment="CENTER">
+                    <CheckBox fx:id="showInactiveCheck"
+                              text="Mostrar inactivos"
+                              onAction="#onToggleShowInactive"/>
+
+                    <ListView fx:id="employeeList" prefHeight="250" prefWidth="480"/>
+
+                    <HBox spacing="10" alignment="CENTER">
+                        <Button text="Añadir Empleado" onAction="#onAddEmployee"/>
+                        <Button text="Editar Empleado" onAction="#onEditEmployee"/>
+                        <Button text="Enrolar Huella" onAction="#onEnroll"/>
+                        <Button text="Activar / Desactivar" onAction="#onToggleEmployeeActive"/>
+                    </HBox>
+                </VBox>
+            </TitledPane>
+
+            <TitledPane text="Registros" expanded="true" collapsible="false">
+                <HBox spacing="10" alignment="CENTER">
+                    <Button text="Registrar Entrada" onAction="#onCheckIn"/>
+                    <Button text="Registrar Salida" onAction="#onCheckOut"/>
+                    <Button fx:id="toggleContinuousButton" text="Activar modo continuo" />
+                </HBox>
+            </TitledPane>
+
+            <TitledPane text="Reportes" expanded="false">
+                <VBox spacing="10" alignment="CENTER">
+                    <Button text="Ver Reporte de Asistencias" onAction="#onShowReports"/>
+                </VBox>
+            </TitledPane>
+
+            <Label fx:id="statusLabel" textFill="green" style="-fx-font-weight: bold;"/>
+        </VBox>
+    </center>
+
+</BorderPane>
