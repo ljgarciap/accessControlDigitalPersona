@@ -9,6 +9,7 @@ com\softclass\fingerprint\MainApp.class
 com\softclass\fingerprint\Toast.class
 com\softclass\fingerprint\AttendanceController$1.class
 com\softclass\fingerprint\FingerprintService$EnrollCallback.class
+com\softclass\fingerprint\Launcher.class
 com\softclass\fingerprint\AttendanceRecord.class
 com\softclass\fingerprint\EmployeeView.class
 com\softclass\fingerprint\FingerprintService$FingerprintListener.class
