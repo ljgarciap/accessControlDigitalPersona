@@ -23,6 +23,7 @@ public class EmployeeView {
 
     private FingerprintService fingerprintService;
 
+    @SuppressWarnings("unchecked")
     public void showWindow() {
         Stage stage = new Stage();
 

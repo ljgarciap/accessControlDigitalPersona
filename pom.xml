@@ -11,6 +11,13 @@
         <javafx.version>21.0.2</javafx.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>local-repo</id>
+            <url>file://${project.basedir}/libs/repo</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <!-- JavaFX -->
         <dependency>
@@ -57,34 +64,26 @@
             <version>3.45.1.0</version>
         </dependency>
 
-        <!-- DigitalPersona SDK Dependencies (Local) -->
+        <!-- DigitalPersona SDK Dependencies (Local Repo) -->
         <dependency>
             <groupId>com.digitalpersona</groupId>
             <artifactId>dpotapi</artifactId>
             <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/dpotapi.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.digitalpersona</groupId>
             <artifactId>dpotjni</artifactId>
             <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/dpotjni.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.digitalpersona</groupId>
             <artifactId>dpfpenrollment</artifactId>
             <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/dpfpenrollment.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.digitalpersona</groupId>
             <artifactId>dpfpverification</artifactId>
             <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/dpfpverification.jar</systemPath>
         </dependency>
         
         <dependency>

@@ -76,7 +76,7 @@ public class AttendanceController {
     @FXML
     public void onAddEmployee() {
         TextInputDialog dialog = new TextInputDialog();
-        dialog.setHeaderText("Enter employee name:");
+        dialog.setHeaderText("Ingresa el nombre del empleado:");
         dialog.showAndWait().ifPresent(name -> {
             try {
                 Employee e = new Employee();
@@ -84,9 +84,9 @@ public class AttendanceController {
                 e.document = "N/A";
                 employeeController.save(e);
                 refreshEmployees();
-                statusLabel.setText("Added " + name);
+                statusLabel.setText("Agregado: " + name);
             } catch (SQLException ex) {
-                statusLabel.setText("DB error: " + ex.getMessage());
+                statusLabel.setText("Error de BD: " + ex.getMessage());
             }
         });
     }
@@ -95,7 +95,7 @@ public class AttendanceController {
     public void onEnroll() {
         Employee sel = employeeList.getSelectionModel().getSelectedItem();
         if (sel == null) {
-            statusLabel.setText("Select employee first");
+            statusLabel.setText("Selecciona un empleado primero");
             return;
         }
         // detener modo continuo antes de enrolar
@@ -122,16 +122,16 @@ public class AttendanceController {
                     try {
                         employeeController.updateFingerprint(sel.id, tmpl);
                         refreshEmployees();
-                        statusLabel.setText("Fingerprint enrolled for " + sel.name);
+                        statusLabel.setText("Huella enrolada para " + sel.name);
                         Toast.show(owner, "✅ Enrolamiento completado para " + sel.name);
                         new Alert(Alert.AlertType.INFORMATION, "Huella enrolada correctamente", ButtonType.OK).show();
                     } catch (Exception ex) {
-                        statusLabel.setText("Error updating DB: " + ex.getMessage());
+                        statusLabel.setText("Error actualizando BD: " + ex.getMessage());
                     }
                 });
             } catch (Exception e) {
                 Platform.runLater(() -> {
-                    statusLabel.setText("Enroll error: " + e.getMessage());
+                    statusLabel.setText("Error de enrolamiento: " + e.getMessage());
                     Toast.show(owner, "❌ Error: " + e.getMessage());
                 });
             }
@@ -164,12 +164,12 @@ public class AttendanceController {
                         ps.setString(3, type);
                         ps.executeUpdate();
                     }
-                    statusLabel.setText(type + " registered for " + e.name);
+                    statusLabel.setText(type + " registrado para " + e.name);
                     Toast.show((Stage) statusLabel.getScene().getWindow(), "✅ " + type + ": " + e.name);
                     return;
                 }
             }
-            statusLabel.setText("No match found");
+            statusLabel.setText("No se encontró coincidencia");
         } catch (Exception ex) {
             statusLabel.setText("Error: " + ex.getMessage());
         }
@@ -258,15 +258,15 @@ public class AttendanceController {
     public void onEditEmployee() {
         Employee sel = employeeList.getSelectionModel().getSelectedItem();
         if (sel == null) {
-            statusLabel.setText("Select employee to edit");
+            statusLabel.setText("Selecciona un empleado para editar");
             return;
         }
 
         Dialog<Employee> dialog = new Dialog<>();
-        dialog.setTitle("Edit Employee");
-        dialog.setHeaderText("Modify employee information:");
+        dialog.setTitle("Editar Empleado");
+        dialog.setHeaderText("Modificar información del empleado:");
 
-        ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+        ButtonType saveButtonType = new ButtonType("Guardar", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
 
         TextField nameField = new TextField(sel.name);
@@ -275,9 +275,9 @@ public class AttendanceController {
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.add(new Label("Name:"), 0, 0);
+        grid.add(new Label("Nombre:"), 0, 0);
         grid.add(nameField, 1, 0);
-        grid.add(new Label("Document:"), 0, 1);
+        grid.add(new Label("Documento:"), 0, 1);
         grid.add(docField, 1, 1);
 
         dialog.getDialogPane().setContent(grid);
@@ -295,7 +295,7 @@ public class AttendanceController {
             try {
                 employeeController.update(updated);
                 refreshEmployees();
-                statusLabel.setText("Updated " + updated.name);
+                statusLabel.setText("Actualizado: " + updated.name);
             } catch (SQLException ex) {
                 statusLabel.setText("DB error: " + ex.getMessage());
             }
@@ -307,7 +307,7 @@ public class AttendanceController {
         try {
             new ReportWindow().show();
         } catch (Exception e) {
-            statusLabel.setText("Error opening reports: " + e.getMessage());
+            statusLabel.setText("Error abriendo reportes: " + e.getMessage());
         }
     }
 
@@ -327,7 +327,7 @@ public class AttendanceController {
             refreshEmployees();
 
             statusLabel.setText(
-                    "Employee " + sel.name + (newState ? " activated" : " deactivated"));
+                    "Empleado " + sel.name + (newState ? " activado" : " desactivado"));
         } catch (SQLException e) {
             statusLabel.setText("Error changing status: " + e.getMessage());
         }

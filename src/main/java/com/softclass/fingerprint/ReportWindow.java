@@ -47,6 +47,7 @@ public class ReportWindow {
         loadData(null, null, null);
     }
 
+    @SuppressWarnings("unchecked")
     private void setupTable() {
         TableColumn<AttendanceRecord, String> nameCol = new TableColumn<>("Usuario");
         nameCol.setCellValueFactory(new PropertyValueFactory<>("employeeName"));
@@ -58,7 +59,7 @@ public class ReportWindow {
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
 
         table.getColumns().addAll(nameCol, timeCol, typeCol);
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
     }
 
     private HBox buildFilterBox() {
@@ -93,14 +94,14 @@ public class ReportWindow {
     }
 
     private void setupFilters() {
-        employeeFilter.setPromptText("All employees");
-        fromDate.setPromptText("Start date");
-        toDate.setPromptText("End date");
+        employeeFilter.setPromptText("Todos los empleados");
+        fromDate.setPromptText("Fecha inicio");
+        toDate.setPromptText("Fecha fin");
     }
 
     private void loadEmployees() throws SQLException {
         try (var ps = Database.get().prepareStatement("SELECT id, name, document FROM employee");
-             ResultSet rs = ps.executeQuery()) {
+                ResultSet rs = ps.executeQuery()) {
             List<Employee> list = new ArrayList<>();
             while (rs.next()) {
                 Employee e = new Employee();
@@ -123,11 +124,11 @@ public class ReportWindow {
 
     private void loadData(Employee emp, LocalDate from, LocalDate to) throws SQLException {
         StringBuilder sql = new StringBuilder("""
-            SELECT e.name, e.active, a.timestamp, a.type
-            FROM attendance a
-            JOIN employee e ON a.employee_id = e.id
-            WHERE 1=1
-            """);
+                SELECT e.name, e.active, a.timestamp, a.type
+                FROM attendance a
+                JOIN employee e ON a.employee_id = e.id
+                WHERE 1=1
+                """);
 
         List<Object> params = new ArrayList<>();
 
@@ -157,9 +158,7 @@ public class ReportWindow {
                     table.getItems().add(new AttendanceRecord(
                             rs.getString("name") + (rs.getBoolean("active") ? "" : " (INACTIVO)"),
                             rs.getString("timestamp"),
-                            rs.getString("type"),
-                            rs.getBoolean("active")
-                    ));
+                            rs.getString("type")));
                 }
             }
         }
@@ -184,7 +183,8 @@ public class ReportWindow {
             fileChooser.setInitialFileName("reporte_ingresos.xlsx");
 
             File file = fileChooser.showSaveDialog(table.getScene().getWindow());
-            if (file == null) return;
+            if (file == null)
+                return;
 
             Workbook workbook = new XSSFWorkbook();
             Sheet sheet = workbook.createSheet("Reporte");
@@ -195,7 +195,7 @@ public class ReportWindow {
             CellStyle headerStyle = workbook.createCellStyle();
             headerStyle.setFont(headerFont);
 
-            String[] columns = {"Usuario", "Timestamp", "Tipo"};
+            String[] columns = { "Usuario", "Timestamp", "Tipo" };
 
             Row headerRow = sheet.createRow(0);
             for (int i = 0; i < columns.length; i++) {
@@ -238,10 +238,11 @@ public class ReportWindow {
     private void exportToPDF() {
         try {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Save PDF Report");
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+            fileChooser.setTitle("Guardar Reporte PDF");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Archivos PDF", "*.pdf"));
             var file = fileChooser.showSaveDialog(null);
-            if (file == null) return;
+            if (file == null)
+                return;
 
             com.itextpdf.text.Document document = new com.itextpdf.text.Document(PageSize.A4, 36, 36, 54, 36);
             PdfWriter.getInstance(document, new FileOutputStream(file));
@@ -257,9 +258,9 @@ public class ReportWindow {
 
             PdfPTable pdfTable = new PdfPTable(3);
             pdfTable.setWidthPercentage(100);
-            pdfTable.setWidths(new float[]{3f, 4f, 2f});
+            pdfTable.setWidths(new float[] { 3f, 4f, 2f });
 
-            String[] headers = {"Usuario", "Timestamp", "Tipo"};
+            String[] headers = { "Usuario", "Timestamp", "Tipo" };
             for (String header : headers) {
                 PdfPCell cell = new PdfPCell(new com.itextpdf.text.Phrase(header, headerFont));
                 cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
