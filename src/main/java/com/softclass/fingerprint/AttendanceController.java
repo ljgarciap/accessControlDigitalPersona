@@ -32,6 +32,7 @@ public class AttendanceController {
             fingerprintService = new FingerprintService();
             refreshEmployees();
             setupContinuousButton();
+            startContinuousMode();
         } catch (Exception e) {
             statusLabel.setText("Error init: " + e.getMessage());
         }
