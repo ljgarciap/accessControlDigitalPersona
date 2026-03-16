@@ -15,7 +15,7 @@ OutputDir=dist\Installer
 OutputBaseFilename=Instalador_Asistencia_Biometrica
 Compression=lzma
 SolidCompression=yes
-SetupIconFile=d:\SOFTCLASS\Biometricos\DigitalPersona\DigitalPersonaDesktop\icon.ico
+SetupIconFile=icon.ico
 WizardStyle=modern
 
 [Languages]
@@ -31,7 +31,7 @@ Name: "{app}"; Permissions: users-modify
 
 [Files]
 ; Copiar todos los archivos de la App Image de jpackage
-Source: "d:\SOFTCLASS\Biometricos\DigitalPersona\DigitalPersonaDesktop\dist\DigitalPersonaApp\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "dist\DigitalPersonaApp\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{group}\Sistema de Asistencia Biometrica"; Filename: "{app}\DigitalPersonaApp.exe"; WorkingDir: "{app}"; IconFilename: "{app}\icon.ico"
